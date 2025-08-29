@@ -207,11 +207,19 @@ Pin direction for port `0x09` (0 = input, 1 = output).
 
 Pin direction for port `0x02` (0 = input, 1 = output).
 
+### Port 0x0C (unknown)
+
+* Direction: unknown
+* Default value: *none*
+* Requires shadow: Unknown
+
+Unknown purpose, but most bits can be set or cleared. Reads `0xE3` after reset.
+
 ### Port 0x0D (CPU clock speed)
 
 * Direction: write?
 * Default value: `0x30` / `0x32`
-* Requires shadow: Unknown
+* Requires shadow: *Yes*
 
 The purpose of this port is not fully understood. Bits 7-4 seem to set the CPU clock speed:
 
@@ -309,14 +317,14 @@ Seems to correspond to TC8521 test register. If that's the case, must be always 
 * Default value: `0x0C`
 * Requires shadow: No
 
-Seems to correspond to TC88521 reset register. The bits seem to have the following purpose:
+Seems to correspond to TC8521 reset register. The bits seem to have the following purpose:
 
 | Bit | Description |
 | --- | ----------- |
 | 3   | 0 = 1 Hz interrupt enable |
 | 2   | 0 = 16 Hz interrupt enable |
 | 1   | 1 = timer reset |
-| 0   | 1 = timer reset |
+| 0   | 1 = alarm reset |
 
 ### Port 0x21 (GPIO group 3)
 
@@ -334,6 +342,8 @@ This port is used exclusively for reading printer status lines:
 | 4   | Input     | Printer port /SELECT (pin 13) |
 | 3   | Input     | Printer port /ERROR (pin 15) |
 | 2   | Input     | Unknown, possibly ring indicator? [^3] |
+
+**Note**: The firmware code accesses this port to read printer status lines, but on my white Mailstation DET1 this port seems to be located at address `0x20`?
 
 ### Port 0x26 (Modem access)
 
@@ -390,6 +400,8 @@ This port controls the eight printer port data lines.
 * Requires shadow: Unknown
 
 The purpose of this port is not known. The firmware writes `0x80` to this port very early in the reset procedure.
+
+Setting bit 2 of this port turns off the LCD for unknown reasons. Changing other bits don't seem to have any effect.
 
 # Footnotes
 
