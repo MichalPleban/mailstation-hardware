@@ -10,8 +10,8 @@ For each port, a sensible initialization value is provided if necessary. The val
 
 | Port | Init | Description |
 | ---- | ---- | ----------- |
-| [0x01](#port-0x01-keyboard-scan) | | Keybard matrix scan |
-| [0x02](#port-0x02-gpio-group-1) || Keyboard rows 8-9 |
+| [0x01](#port-0x01-keyboard-scan) | 0x00 | Keybard matrix scan |
+| [0x02](#port-0x02-gpio-group-1) | | Keyboard rows 8-9 |
 
 ### GPIO pins
 
@@ -70,6 +70,8 @@ For each port, a sensible initialization value is provided if necessary. The val
 | [0x0D](#port-0x0d-cpu-clock-speed) | 0x30 | CPU clock speed |
 | [0x2F](#port-0x2f-unknown) | 0x80 | Unknown |
 | [0x26](#port-0x26-modem-access) | 0x00 | Uknown, possibly modem related |
+| [0x0C](#port-0x0c-unknown) | | Unknown |
+| [0x20](#port-0x20-unknown) | | Unknown |
 
 ## List of ports by number
 
@@ -78,12 +80,14 @@ Only used ports are listed.
 ### Port 0x01 (keyboard scan)
 
 * Direction: read/write
-* Default value: *none*
+* Default value: `0x00`
 * Requires shadow: No
 
 Value written to this port sets the keyboard row bits 0-7. Value read from this port gets the keyboard column bits 0-7.
 
 Because the keyboard matrix has 10 rows, the remaining two rows are controlled by bits 1-0 of port `0x02`.
+
+By default, the firmware writes `0x00` to this register, to enable reading from all rows at once. This way, any value read other than `0xFF` indicates that some key is pressed, anf the 64 Hz interrupt routine can proceed with testing the whole keyboard matrix.
 
 ### Port 0x02 (GPIO group 1)
 
@@ -119,7 +123,7 @@ Acknowledging an interrupt is done by disabling it, the enabling again.
 | 7   | Caller ID |
 | 6   | Modem |
 | 5   | Real Time Clock |
-| 4   | Unknown purpose [^2] |
+| 4   | 1 Hz timer |
 | 3   | Unused |
 | 2   | Unused |
 | 1   | 64 Hz timer |
@@ -326,6 +330,14 @@ Seems to correspond to TC8521 reset register. The bits seem to have the followin
 | 1   | 1 = timer reset |
 | 0   | 1 = alarm reset |
 
+### Port 0x20 (Unknown)
+
+* Direction: unknown
+* Default value: *none*
+* Requires shadow: unknown
+
+It appears that bit 6 can be set, but the purpose is unknown.
+
 ### Port 0x21 (GPIO group 3)
 
 * Direction: read
@@ -341,9 +353,7 @@ This port is used exclusively for reading printer status lines:
 | 5   | Input     | Printer port /PAPER_OUT (pin 12) |
 | 4   | Input     | Printer port /SELECT (pin 13) |
 | 3   | Input     | Printer port /ERROR (pin 15) |
-| 2   | Input     | Unknown, possibly ring indicator? [^3] |
-
-**Note**: The firmware code accesses this port to read printer status lines, but on my white Mailstation DET1 this port seems to be located at address `0x20`?
+| 2   | Input     | Unknown, possibly ring indicator? [^2] |
 
 ### Port 0x26 (Modem access)
 
@@ -405,9 +415,7 @@ Setting bit 2 of this port turns off the LCD for unknown reasons. Changing other
 
 # Footnotes
 
-[^1]: Firmware code reads these bits, but bu default they are set as outputs.
+[^1]: Firmware code reads these bits, but by default they are set as outputs.
 
-[^2]: Firmware code contains handler for this interrupt, but it does not seem to be enabled. The only thing the handler does is to increment a 16-bit counter.
-
-[^3]: Firmware code reads this bit, but the purpose is not fully understood. It is connected to pin 3 of U603 on the motherboard.
+[^2]: Firmware code reads this bit, but the purpose is not fully understood. It is connected to pin 3 of U603 on the motherboard.
 
