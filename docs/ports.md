@@ -103,7 +103,7 @@ Individual GPIO bits in this port have the following purpose:
 | 6   | Input     | Caller ID data [^1] |
 | 5   | Output    | Modem power on |
 | 4   | Output    | New email LED |
-| 3   | Output    | LCD controlled column latch |
+| 3   | Output    | LCD controller column latch |
 | 2   | Input     | Caller ID ready [^1] |
 | 1   | Output    | Keyboard matrix row 9 |
 | 0   | Output    | Keyboard matrix row 8 |
@@ -295,8 +295,8 @@ Seems to correspond to TC8521 page register. The bits seem to have the following
 
 | Bit | Description |
 | --- | ----------- |
-| 3   | 0 = Timer enable |
-| 2   | 0 = Alarm enable |
+| 3   | 1 = Timer enable |
+| 2   | 1 = Alarm enable |
 | 1   | Page number bit 1 |
 | 0   | Page number bit 0 |
 
@@ -376,8 +376,8 @@ Individual GPIO bits in this port have the following purpose:
 | 4   | Output    | Unknown, related to caller ID (FSK/DTMF select?) |
 | 3   | Output    | Caller ID reset |
 | 2   | Input     | Caller ID clock |
-| 1   | Output    | System power off |
-| 0   | Output    | Modem power off |
+| 1   | Output    | Modem power off |
+| 0   | Output    | System power off |
 
 ### Port 0x29 (GPIO group 4 direction)
 
