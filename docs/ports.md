@@ -221,17 +221,27 @@ Unknown purpose, but most bits can be set or cleared. Reads `0xE3` after reset.
 
 ### Port 0x0D (CPU clock speed)
 
-* Direction: write?
-* Default value: `0x30` / `0x32`
+* Direction: write
+* Default value: `0x32`
 * Requires shadow: *Yes*
 
-The purpose of this port is not fully understood. Bits 7-4 seem to set the CPU clock speed:
+Bits 4 and 6 set the CPU cpeed:
 
-* `0xF0`: 8 MHz
-* `0x30`: 10 MHz
-* `0x00`: 12 MHz
+| Value | Speed  |
+| 00    | 12 MHz |
+| 01    | 12 MHz |
+| 10    | 12 MHz |
+| 11    | 8 MHz  |
 
-The firmware also sets bit 1 later inthe initialization stage, the purpose of this bit is not known.
+Bits 1-2 set the frequency of the level 1 IRQ:
+
+| Value | Frequency |
+| 00    | 128 Hz    |
+| 01    | 64 Hz     |
+| 10    | 32 Hz     |
+| 11    | 16 Hz     |
+
+The maning of other bits is not known. Thus, setting the default value of `0x32` sets CPu speed to 10 MHz (bit 6 = 0, bit 4 = 1) and interrupt frequency to 64 Hz (bit 1 = 1, bit 0 = 0).
 
 ### Port 0x10 (RTC seconds low)
 
@@ -332,11 +342,11 @@ Seems to correspond to TC8521 reset register. The bits seem to have the followin
 
 ### Port 0x20 (Unknown)
 
-* Direction: unknown
+* Direction: read
 * Default value: *none*
-* Requires shadow: unknown
+* Requires shadow: No
 
-It appears that bit 6 can be set, but the purpose is unknown.
+This appears to be a copy of [port 0x21](#port-0x21-gpio-group-3)
 
 ### Port 0x21 (GPIO group 3)
 
@@ -403,15 +413,30 @@ Pin direction for port `0x28` (0 = input, 1 = output)
 
 This port controls the eight printer port data lines.
 
-### Port 0x2F (Unknown)
+### Port 0x2F (IRQ speed)
 
-* Direction: unknown
+* Direction: read/write
 * Default value: `0x80`
-* Requires shadow: Unknown
+* Requires shadow: No
 
-The purpose of this port is not known. The firmware writes `0x80` to this port very early in the reset procedure.
+Bit 7 is set by firmware very early in the reset procedure, the purpose of this is not know.
 
-Setting bit 2 of this port turns off the LCD for unknown reasons. Changing other bits don't seem to have any effect.
+Bits 4-6 set the rate of the level 4 IRQ:
+
+| Value | Rate |
+| ----- | ---- |
+| 000   | 1s   |
+| 001   | Disabled |
+| 010   | Disabled |
+| 011   | Disabled |
+| 100   | 1s   |
+| 101   | 2s   |
+| 110   | 4s   |
+| 111   | 8s   |
+
+Setting bits 2 and 3 seem to affect I/O lines in a strange way, switching off the LCD and LED (possibly disabling the I/O ports or tristating them?).
+
+Bits 0 and 1 seem to have no effect.
 
 # Footnotes
 
