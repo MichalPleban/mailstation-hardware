@@ -6,6 +6,12 @@ This document describes the I/O ports available on the system.
 
 For each port, a sensible initialization value is provided if necessary. The values are taken from the existing firmware code.
 
+### Screen
+
+| Port | Init | Description |
+| ---- | ---- | ----------- |
+| [0x00](#port-0x00-screen-memory-location) | 0x00 | Screen buffer position |
+
 ### Keyboard scan
 
 | Port | Init | Description |
@@ -68,14 +74,26 @@ For each port, a sensible initialization value is provided if necessary. The val
 | Port | Init | Description |
 | ---- | ---- | ----------- |
 | [0x0D](#port-0x0d-cpu-clock-speed) | 0x30 | CPU clock speed |
-| [0x2F](#port-0x2f-unknown) | 0x80 | Unknown |
+| [0x2F](#port-0x2f-irq-speed) | 0x80 | IRQ frequency |
+| [0x20](#port-0x20-gpio-group-3-copy) | | Copy of GPIO group 3 |
 | [0x26](#port-0x26-modem-access) | 0x00 | Uknown, possibly modem related |
 | [0x0C](#port-0x0c-unknown) | | Unknown |
-| [0x20](#port-0x20-unknown) | | Unknown |
 
 ## List of ports by number
 
 Only used ports are listed.
+
+### Port 0x00 (screen memory location)
+
+* Direction: write
+* Default value: `0x00`
+* Requires shadow: *Yes*
+
+**Note**: This port is only usd in "new" Mailstations!
+
+Bits 0-5 set the 256-byte page in the `0xC000` area where the screen memory starts. Therefore `0x00` means `0xC000`, `0x01` means `0xC100` and so on.
+
+The CPU mirrors all writes to the screen area and sends them directly to the LCD controller. This mechanism is not used in "old" Mailstations, which use memory-mapped LCD controllers.
 
 ### Port 0x01 (keyboard scan)
 
@@ -340,7 +358,7 @@ Seems to correspond to TC8521 reset register. The bits seem to have the followin
 | 1   | 1 = timer reset |
 | 0   | 1 = alarm reset |
 
-### Port 0x20 (Unknown)
+### Port 0x20 (GPIO group 3 copy)
 
 * Direction: read
 * Default value: *none*
