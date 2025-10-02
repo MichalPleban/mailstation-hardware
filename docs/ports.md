@@ -4,7 +4,7 @@ This document describes the I/O ports available on the system.
 
 ## List of ports by category
 
-For each port, a sensible initialization value is provided if necessary. The values are taken from the existing firmware code.
+For port that need it, a sensible initialization value is provided if necessary. The values are mostly taken from the existing firmware code, with some differences where it seems appropriate.
 
 ### Screen
 
@@ -93,7 +93,7 @@ Only used ports are listed.
 
 Bits 0-5 set the 256-byte page in the `0xC000` area where the screen memory starts. Therefore `0x00` means `0xC000`, `0x01` means `0xC100` and so on.
 
-The CPU mirrors all writes to the screen area and sends them directly to the LCD controller. This mechanism is not used in "old" Mailstations, which use memory-mapped LCD controllers.
+The CPU mirrors all writes to the screen area and sends them directly to the LCD controller. This mechanism is not used in "old" Mailstations, which use memory-mapped LCD controller devices instead that require manual copying of data from RAM to the LCD.
 
 ### Port 0x01 (keyboard scan)
 

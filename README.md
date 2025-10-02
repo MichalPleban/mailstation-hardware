@@ -4,7 +4,8 @@ This repository contains detailed description of the CIDCO Mailstation hardware,
 
 ## Contents
 
-* [List of I/O ports](docs/ports.md)
+* [Lisf of MailStation models](docs/models.md)
+* [Description of I/O ports](docs/ports.md)
 
 ## Credits
 
