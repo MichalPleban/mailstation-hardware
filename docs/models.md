@@ -2,6 +2,12 @@
 
 This document is intended as a reference documenting the various hardware models of the MailStation, the differences between them, and their hackability. 
 
+![Different MailStation models](../mailstation.jpg)
+
+*Top row: Various incarnations of Mivo 100.*
+*Middle row: Mivo 120, Mivo 150, Mivo 200.*
+*Bottom row: Mivo 250, Mivo 350.*
+
 ## The original MailStation (Mivo 100 = DET1)
 
 This is the first version of the MailStation, and by far the most popular. It has a small rectangle case, and can come either in a black or white color. The black units run 2.5x firmware while the white ones run 3.0x, but otherwise these units are identical hardware-wise [^1]. You can flash a 3.0x firmware onto a black unit, or downgrade the white one to 2.5x, and everything will still work. 
