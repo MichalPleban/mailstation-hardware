@@ -246,6 +246,7 @@ Unknown purpose, but most bits can be set or cleared. Reads `0xE3` after reset.
 Bits 4 and 6 set the CPU cpeed:
 
 | Value | Speed  |
+| ----- | -----  |
 | 00    | 12 MHz |
 | 01    | 12 MHz |
 | 10    | 12 MHz |
@@ -254,12 +255,13 @@ Bits 4 and 6 set the CPU cpeed:
 Bits 1-2 set the frequency of the level 1 IRQ:
 
 | Value | Frequency |
+| ----- | --------- |
 | 00    | 128 Hz    |
 | 01    | 64 Hz     |
 | 10    | 32 Hz     |
 | 11    | 16 Hz     |
 
-The maning of other bits is not known. Thus, setting the default value of `0x32` sets CPu speed to 10 MHz (bit 6 = 0, bit 4 = 1) and interrupt frequency to 64 Hz (bit 1 = 1, bit 0 = 0).
+The meaning of other bits is not known. Thus, setting the default value of `0x32` sets CPU speed to 10 MHz (bit 6 = 0, bit 4 = 1) and interrupt frequency to 64 Hz (bit 1 = 1, bit 0 = 0).
 
 ### Port 0x10 (RTC seconds low)
 
