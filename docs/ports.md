@@ -248,7 +248,7 @@ Bits 4 and 6 set the CPU cpeed:
 | Value | Speed  |
 | ----- | -----  |
 | 00    | 12 MHz |
-| 01    | 12 MHz |
+| 01    | 10 MHz |
 | 10    | 12 MHz |
 | 11    | 8 MHz  |
 
