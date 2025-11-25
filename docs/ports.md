@@ -32,6 +32,7 @@ For port that need it, a sensible initialization value is provided if necessary.
 | [0x29](#port-0x29-gpio-group-4-direction) | 0x03 | GPIO 4 pin direction |
 | [0x2D](#port-0x2d-gpio-group-5) | 0x00 | GPIO 5: printer data lines |
 | [0x2C](#port-0x2c-gpio-group-5-direction) | 0xFF | GPIO 5 pin direction |
+| [0x26](#port-0x26-modem-reset) | 0x00 | Modem reset pin |
 
 ### Interrupts
 
@@ -76,7 +77,6 @@ For port that need it, a sensible initialization value is provided if necessary.
 | [0x0D](#port-0x0d-cpu-clock-speed) | 0x30 | CPU clock speed |
 | [0x2F](#port-0x2f-irq-speed) | 0x80 | IRQ frequency |
 | [0x20](#port-0x20-gpio-group-3-copy) | | Copy of GPIO group 3 |
-| [0x26](#port-0x26-modem-access) | 0x00 | Uknown, possibly modem related |
 | [0x0C](#port-0x0c-unknown) | | Unknown |
 
 ## List of ports by number
@@ -385,17 +385,17 @@ This port is used exclusively for reading printer status lines:
 | 3   | Input     | Printer port /ERROR (pin 15) |
 | 2   | Input     | Unknown, possibly ring indicator? [^2] |
 
-### Port 0x26 (Modem access)
+### Port 0x26 (Modem reset)
 
-* Direction: unknown
+* Direction: write
 * Default value: `0x00`
-* Requires shadow: unknown
+* Requires shadow: No
 
-The purpose of this port is not known, but all firmware accesses to the modem are made with bit 0 if this port set to 1.
+Bit 0 of this port is connected to the modem reset pin. To reset the modem properly, write `0x00` to this port, wait a short while, then write `0x01`.
 
 ### Port 0x28 (GPIO group 4)
 
-* Direction: read/write
+* Direction: write
 * Default value: `0x00`
 * Requires shadow: **Yes**
 
@@ -403,10 +403,9 @@ Individual GPIO bits in this port have the following purpose:
 
 | Bit | Direction | Description |
 | --- | --------- | ----------- |
-| 4   | Output    | Unknown, related to caller ID (FSK/DTMF select?) |
-| 3   | Output    | Caller ID reset |
-| 2   | Input     | Caller ID clock |
-| 1   | Output    | Modem power off |
+| 3   | Output    | Unknown, related to caller ID (FSK/DTMF select?) |
+| 2   | Output    | Caller ID reset |
+| 1   | Output    | Caller ID clock |
 | 0   | Output    | System power off |
 
 ### Port 0x29 (GPIO group 4 direction)
