@@ -8,6 +8,7 @@ This repository contains detailed description of the CIDCO Mailstation hardware,
 * [Memory map](docs/memory.md)
 * [I/O ports](docs/ports.md)
 * [Screen organization](docs/screen.md)
+* [Keyboard decoding](docs/keyboard.md)
 
 ## Credits
 

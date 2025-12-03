@@ -10,7 +10,7 @@ The screen is divided into two halves: left and right. Each is accessed as a dev
 
 Each LCD controller has 256 directly addressable bytes. That is, of course, not enough to access all the 160x128 pixels it controls. Therefore writing LCD data is done in two phases:
 
-1. First you need to select the 8-bit screen column that you want to access.
+1. First you need to select the 8-pixels screen column that you want to access.
 2. Then, you write actual pixel data for this column.
 
 The correct procedure is therefore as follows:
@@ -24,7 +24,7 @@ The columns are numbered from right to left, i.e. the leftmost column has the nu
 
 Note that accessing the LCD controllers this way requires manipulating a bit in port `0x02`, which also contains two bits of the keyboard matrix. It is therefore necessary to access this port with interrupts disabled, otherwise the keyboard scanning routine in the interrupt handler can overwrite this bit, leading to strange errors.
 
-The screen organization is described in this picture:
+The bytes outside the `0x38-0xB7` range can also be accessed, but they do nothing (they can be used for detecting the rpesence of the old screen though).The screen organization is described in this picture:
 
 ![LCD Old](lcd_old.svg)
 
@@ -37,3 +37,7 @@ The screen format is fortunately straightforward: the bytes are simply laid out 
 The screen organization is described in this picture:
 
 ![LCD New](lcd_new.svg)
+
+## Detecting the screen type
+
+To detect the type of the screen your Mailstation has, you can select one of the LCD devices into the address space, write some pixel data to it (preferably outise the `0x38-0xB7` displayable range) and try to read it back. If it reads properly, the LCD controller is preesent so you have the old screen.
