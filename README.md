@@ -12,6 +12,10 @@ This repository contains detailed description of the CIDCO Mailstation hardware,
 * [Interrupt handling](docs/interrupts.md)
 * [Power management](docs/power.md)
 
+## Other usfeul information
+
+* [Chip datasheets](docs/datasheets.md)
+
 ## Credits
 
 A lot of the information has been taken from Kris Bahnsen's Mailstation Wiki available at https://github.com/kbembedded/mailstation/wiki/. The information was originally collected by members of the (now defunct) Mailstation Yahoo Group and linux-hackers.net forum, including Rogblake2000, FyberOptic, Cyrano Jones, jmareksr, John Hogerhuis, and others.
