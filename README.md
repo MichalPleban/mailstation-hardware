@@ -15,6 +15,7 @@ This repository contains detailed description of the CIDCO Mailstation hardware,
 ## Other usfeul information
 
 * [Chip datasheets](docs/datasheets.md)
+* [Firmware dumps](docs/firmware.md)
 
 ## Credits
 
